@@ -4,46 +4,38 @@ import subprocess
 from pathlib import Path
 import os 
 
+def parse(path: str) -> str:
+    dir = Path(path)
+    dir_len = len(path)
+    dir_list = []
+    i = 0
 
+    for sub_dir in dir.iterdir():
+        sub_dir = str(sub_dir)
+        print(f"{i}. {sub_dir[dir_len::]}")
+        i += 1
+        dir_list.append(sub_dir)
+
+    choice = int(input("\nEnter your choice: "))
+
+    while choice < 0 or choice >= i:
+        choice = int(input("Enter valid number: "))
+    
+    res = dir_list[choice]
+    return res
+
+
+#selecting clip
 path = "/Users/mane/Desktop/upscaling project/clips/"
-clips = Path(path)
-clip_dir = []
-i = 0
-path_len = len(path)
+print(f"Enter your choice for the clip you want to upscale: ")
+clip = parse(path)
+print(f"clip choosen is {clip}")
 
-print("Enter the number corresponding to the clip you want to upscale:")
-for clip in clips.iterdir():
-    c = str(clip)[path_len::]
-    print(f"{i}. {c}")
-    i += 1
-    clip_dir.append(clip)
-
-choice = int(input("Number: "))
-
-while choice < 0 or choice > i:
-    choice = int(input("Enter a valid num pls: "))
-
-clip = clip_dir[choice]
-print(f"selected clip path is: {clip}\n")
-
-types = Path(clip)
-type_dir = []
-i = 0
-types_len = len(str(types)) + 1
-print("Enter the number corresponding to the type of clip you want to upscale:")
-for type in types.iterdir():
-    t = str(type)[types_len::]
-    print(f"{i}. {t}")
-    i += 1
-    type_dir.append(type)
-
-choice = int(input("Number: "))
-
-while choice < 0 or choice > i:
-    choice = int(input("Enter a valid num pls: "))
-
-type = type_dir[choice]
-print(f"selected clip is {type}\n")
+#selecting catogery of clip
+path = clip + '/'
+print(f"Enter your choice for the catogery of clip you want to upscale: ")
+cat = parse(path)
+print(f"catagoery choosen is {cat}")
 
 # lst = os.listdir(clip)
 
