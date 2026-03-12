@@ -24,22 +24,34 @@ def parse(path: str) -> str:
     res = dir_list[choice]
     return res
 
+fin_path = "clips_new/"
 
 #selecting clip
-path = "/Users/mane/Desktop/upscaling project/clips/"
+path = "clips/"
+path_len = len(path)
+
 print(f"Enter your choice for the clip you want to upscale: ")
 clip = parse(path)
 print(f"clip choosen is {clip}")
 
+fin_path = fin_path + clip[path_len::] + '/'
+if os.path.exists(fin_path):
+    print(f"final path {fin_path} already exists")
+else:
+    subprocess.call(['mkdir', fin_path])
+
 #selecting catogery of clip
 path = clip + '/'
-print(f"Enter your choice for the catogery of clip you want to upscale: ")
+path_len = len(path)
+print(f"\nEnter your choice for the catogery of clip you want to upscale: ")
 cat = parse(path)
 print(f"catagoery choosen is {cat}")
 
-# lst = os.listdir(clip)
+fin_path = fin_path + cat[path_len::]
+if os.path.exists(fin_path):
+    print(f"final path {fin_path} already exists")
+else:
+    subprocess.call(['mkdir', fin_path])
 
 
-# frames = Path()
 
-#subprocess.call()  
