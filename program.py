@@ -24,10 +24,46 @@ def parse(path: str) -> str:
     res = dir_list[choice]
     return res
 
-fin_path = "clips_new/"
+def frame_upscale(path: str, fin_path: str):
+    frames = Path(path)
+    path_len = len(path) + 1
+    i = 0
+    for frame in frames.iterdir():
+        img1 = plt.imread(frame)
+        name = str(frame)[path_len::]
+
+        row, col = img1.shape[:2]
+        row, col = int(row), int(col)
+
+        img2 = np.zeros((row*2, col*2, 3))
+
+        for r in range(row):
+            for c in range(col):
+                img2[2*r,2*c,0] = img1[r,c,0]/255
+                img2[2*r,2*c,1] = img1[r,c,1]/255
+                img2[2*r,2*c,2] = img1[r,c,2]/255
+                img2[2*r,2*c+1,0] = img1[r,c,0]/255
+                img2[2*r,2*c+1,1] = img1[r,c,1]/255
+                img2[2*r,2*c+1,2] = img1[r,c,2]/255
+                img2[2*r+1,2*c,0] = img1[r,c,0]/255
+                img2[2*r+1,2*c,1] = img1[r,c,1]/255
+                img2[2*r+1,2*c,2] = img1[r,c,2]/255
+                img2[2*r+1,2*c+1,0] = img1[r,c,0]/255
+                img2[2*r+1,2*c+1,1] = img1[r,c,1]/255
+                img2[2*r+1,2*c+1,2] = img1[r,c,2]/255
+
+        file = fin_path + name
+        plt.imsave(file, img2)
+        i += 1
+        if i == 1:
+            break
+    
+    return
+
+fin_path = "/Users/mane/Desktop/upscaling project/clips_new/"
 
 #selecting clip
-path = "clips/"
+path = "/Users/mane/Desktop/upscaling project/clips/"
 path_len = len(path)
 
 print(f"Enter your choice for the clip you want to upscale: ")
@@ -47,11 +83,14 @@ print(f"\nEnter your choice for the catogery of clip you want to upscale: ")
 cat = parse(path)
 print(f"catagoery choosen is {cat}")
 
-fin_path = fin_path + cat[path_len::]
+fin_path = fin_path + cat[path_len::] + '/'
 if os.path.exists(fin_path):
     print(f"final path {fin_path} already exists")
 else:
     subprocess.call(['mkdir', fin_path])
 
+frame_upscale(cat,fin_path)
 
 
+
+# frame_upscale("clips_new/groupdance/lifetime/","/Users/mane/Desktop/upscaling project/")
