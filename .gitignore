@@ -4,3 +4,5 @@ videos/
 image_sequences/
 clips/
 clips_new/
+rgb*
+output*
