@@ -46,9 +46,9 @@ def frame_upscale(path: str, fin_path: str):
                 print(f"Row #{r} and Col #{c}")
                 # #first top box
                 print("first top box")
-                print(f"{img1[r,c,0]} /510 = {img1[r,c,0] /255}")
-                print(f"{img1[r,c,1]} /510 = {img1[r,c,0] /255}")
-                print(f"{img1[r,c,2]} /510 = {img1[r,c,0] /255}")
+                print(f"{img1[r,c,0]} /255 = {img1[r,c,0] /255}")
+                print(f"{img1[r,c,1]} /255 = {img1[r,c,0] /255}")
+                print(f"{img1[r,c,2]} /255 = {img1[r,c,0] /255}")
                 img2[2*r,2*c,0] = img1[r,c,0] /255
                 img2[2*r,2*c,1] = img1[r,c,1] /255
                 img2[2*r,2*c,2] = img1[r,c,2] /255
