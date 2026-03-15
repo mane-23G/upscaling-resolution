@@ -37,18 +37,15 @@ def frame_upscale(path: str, fin_path: str):
 
         img2 = np.empty((row*2, col*2, 3))
 
-        row = 10
-        col = 10
 
-        print(f"divided by 510")
         for r in range(row):
             for c in range(col):
-                print(f"Row #{r} and Col #{c}")
+                # print(f"Row #{r} and Col #{c}")
                 # #first top box
-                print("first top box")
-                print(f"{img1[r,c,0]} /255 = {img1[r,c,0] /255}")
-                print(f"{img1[r,c,1]} /255 = {img1[r,c,0] /255}")
-                print(f"{img1[r,c,2]} /255 = {img1[r,c,0] /255}")
+                # print("first top box")
+                # print(f"{img1[r,c,0]} /255 = {img1[r,c,0] /255}")
+                # print(f"{img1[r,c,1]} /255 = {img1[r,c,0] /255}")
+                # print(f"{img1[r,c,2]} /255 = {img1[r,c,0] /255}")
                 img2[2*r,2*c,0] = img1[r,c,0] /255
                 img2[2*r,2*c,1] = img1[r,c,1] /255
                 img2[2*r,2*c,2] = img1[r,c,2] /255
@@ -56,77 +53,71 @@ def frame_upscale(path: str, fin_path: str):
                 c1 = c+1 if c+1 < col else c
                 r1 = r+1 if r+1 < row else r
                 #second top box
-                print("second top box")
-                print(f"{img1[r,c,0]} + {img1[r,c1,0]} /510 = {(img1[r,c,0] + img1[r,c1,0]) / 510}")
-                print(f"{img1[r,c,1]} + {img1[r,c1,1]} /510 = {(img1[r,c,1] + img1[r,c1,1]) / 510}")
-                print(f"{img1[r,c,2]} + {img1[r,c1,2]} /510 = {(img1[r,c,2] + img1[r,c1,2]) / 510}")
-                img2[2*r,2*c+1,0] = (img1[r,c,0] + img1[r,c1,0]) / 510
-                img2[2*r,2*c+1,1] = (img1[r,c,1] + img1[r,c1,1]) / 510
-                img2[2*r,2*c+1,2] = (img1[r,c,2] + img1[r,c1,2]) / 510
-                if r == 0 and c == 0:
-                    act = (87+177) /510
-                    print(f"SPECIAL {img2[2*r,2*c+1,2]} vs {act}")
-                
+                # print("second top box")
+                # print(f"{img1[r,c,0]} + {img1[r,c1,0]} /510 = {(img1[r,c,0]/510 + img1[r,c1,0]/510)}")
+                # print(f"{img1[r,c,1]} + {img1[r,c1,1]} /510 = {(img1[r,c,1]/510 + img1[r,c1,1]/510)}")
+                # print(f"{img1[r,c,2]} + {img1[r,c1,2]} /510 = {(img1[r,c,2]/510 + img1[r,c1,2]/510)}")
+                img2[2*r,2*c+1,0] = (img1[r,c,0]/510 + img1[r,c1,0]/510) 
+                img2[2*r,2*c+1,1] = (img1[r,c,1]/510 + img1[r,c1,1]/510) 
+                img2[2*r,2*c+1,2] = (img1[r,c,2]/510 + img1[r,c1,2]/510) 
+
                 #first bottom box
-                print("first bottom box")
-                print(f"{img1[r,c,0]} + {img1[r1,c,0]} /510 = {(img1[r,c,0] + img1[r1,c,0]) / 510}") 
-                print(f"{img1[r,c,1]} + {img1[r1,c,1]} /510 = {(img1[r,c,1] + img1[r1,c,1]) / 510}")
-                print(f"{img1[r,c,2]} + {img1[r1,c,2]} /510 = {(img1[r,c,2] + img1[r1,c,2]) / 510}")
-                img2[2*r+1,2*c,0] = (img1[r,c,0] + img1[r1,c,0]) / 510
-                img2[2*r+1,2*c,1] = (img1[r,c,1] + img1[r1,c,1]) / 510
-                img2[2*r+1,2*c,2] = (img1[r,c,2] + img1[r1,c,2]) / 510
+                # print("first bottom box")
+                # print(f"{img1[r,c,0]} + {img1[r1,c,0]} /510 = {(img1[r,c,0]/510 + img1[r1,c,0]/510)}") 
+                # print(f"{img1[r,c,1]} + {img1[r1,c,1]} /510 = {(img1[r,c,1]/510 + img1[r1,c,1]/510)}")
+                # print(f"{img1[r,c,2]} + {img1[r1,c,2]} /510 = {(img1[r,c,2]/510 + img1[r1,c,2]/510)}")
+                img2[2*r+1,2*c,0] = (img1[r,c,0]/510 + img1[r1,c,0]/510) 
+                img2[2*r+1,2*c,1] = (img1[r,c,1]/510 + img1[r1,c,1]/510) 
+                img2[2*r+1,2*c,2] = (img1[r,c,2]/510 + img1[r1,c,2]/510) 
                 
                 #second bottom box
-                print("second bottom box")
-                print(f"{img1[r,c,0]} + {img1[r1,c1,0]} / 510 = {(img1[r1,c1,0] + img2[2*r,2*c+1,0]) / 510}")
-                print(f"{img1[r,c,1]} + {img1[r1,c1,1]} / 510 = {(img1[r1,c1,1] + img2[2*r,2*c+1,1]) / 510}")
-                print(f"{img1[r,c,2]} + {img1[r1,c1,2]} / 510 = {(img1[r1,c1,2] + img2[2*r,2*c+1,2]) / 510}")
-                img2[2*r+1,2*c+1,0] = (img1[r1,c1,0] + img2[2*r,2*c+1,0]) / 510
-                img2[2*r+1,2*c+1,1] = (img1[r1,c1,1] + img2[2*r,2*c+1,1]) / 510
-                img2[2*r+1,2*c+1,2] = (img1[r1,c1,2] + img2[2*r,2*c+1,2]) / 510
+                # print("second bottom box")
+                # print(f"{img1[r,c,0]} + {img1[r1,c1,0]} / 510 = {(img1[r1,c1,0]/510 + img2[2*r,2*c+1,0]/ 510)}")
+                # print(f"{img1[r,c,1]} + {img1[r1,c1,1]} / 510 = {(img1[r1,c1,1]/510 + img2[2*r,2*c+1,1]/ 510)}")
+                # print(f"{img1[r,c,2]} + {img1[r1,c1,2]} / 510 = {(img1[r1,c1,2]/510 + img2[2*r,2*c+1,2]/ 510)}")
+                img2[2*r+1,2*c+1,0] = (img1[r1,c1,0]/510 + img2[2*r,2*c+1,0]/510)
+                img2[2*r+1,2*c+1,1] = (img1[r1,c1,1]/510 + img2[2*r,2*c+1,1]/510)
+                img2[2*r+1,2*c+1,2] = (img1[r1,c1,2]/510 + img2[2*r,2*c+1,2]/510)
 
                 # print(f"Row {r} and Col {c}")
                 # print(f"{img2[2*r,2*c]} {img2[2*r,2*c+1]} {img2[2*r+1,2*c]} {img2[2*r+1,2*c+1]}")
 
-        file = fin_path + "frame-new.jpg"
+        file = fin_path + name
         plt.imsave(file, img2)
-        i += 1
-        if i == 1:
-            break
     
     return
 
-# fin_path = "/Users/mane/Desktop/upscaling project/clips_new/"
+fin_path = "/Users/mane/Desktop/upscaling project/clips_new/"
 
-# #selecting clip
-# path = "/Users/mane/Desktop/upscaling project/clips/"
-# path_len = len(path)
+#selecting clip
+path = "/Users/mane/Desktop/upscaling project/clips/"
+path_len = len(path)
 
-# print(f"Enter your choice for the clip you want to upscale: ")
-# clip = parse(path)
-# print(f"clip choosen is {clip}")
+print(f"Enter your choice for the clip you want to upscale: ")
+clip = parse(path)
+print(f"clip choosen is {clip}")
 
-# fin_path = fin_path + clip[path_len::] + '/'
-# if os.path.exists(fin_path):
-#     print(f"final path {fin_path} already exists")
-# else:
-#     subprocess.call(['mkdir', fin_path])
+fin_path = fin_path + clip[path_len::] + '/'
+if os.path.exists(fin_path):
+    print(f"final path {fin_path} already exists")
+else:
+    subprocess.call(['mkdir', fin_path])
 
-# #selecting catogery of clip
-# path = clip + '/'
-# path_len = len(path)
-# print(f"\nEnter your choice for the catogery of clip you want to upscale: ")
-# cat = parse(path)
-# print(f"catagoery choosen is {cat}")
+#selecting catogery of clip
+path = clip + '/'
+path_len = len(path)
+print(f"\nEnter your choice for the catogery of clip you want to upscale: ")
+cat = parse(path)
+print(f"catagoery choosen is {cat}")
 
-# fin_path = fin_path + cat[path_len::] + '/'
-# if os.path.exists(fin_path):
-#     print(f"final path {fin_path} already exists")
-# else:
-#     subprocess.call(['mkdir', fin_path])
+fin_path = fin_path + cat[path_len::] + '/'
+if os.path.exists(fin_path):
+    print(f"final path {fin_path} already exists")
+else:
+    subprocess.call(['mkdir', fin_path])
 
-# frame_upscale(cat,fin_path)
-
-cat = "clips_new/trio/lifetime/"
-fin_path = "/Users/mane/Desktop/upscaling project/"
 frame_upscale(cat,fin_path)
+
+# cat = "clips_new/trio/lifetime/"
+# fin_path = "/Users/mane/Desktop/upscaling project/"
+# frame_upscale(cat,cat)
