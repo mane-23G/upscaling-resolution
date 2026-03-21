@@ -29,15 +29,22 @@ def frame_upscale(path: str, fin_path: str):
     path_len = len(path) + 1
     i = 0
     for frame in frames.iterdir():
+
         img1 = plt.imread(frame)
-        name = str(frame)[path_len::]
+        name = str(frame)[path_len-1::]
+
+        file = Path(fin_path + name)
+        if file.exists():
+            print(f"{str(file)} already exists")
+            continue
 
         row, col = img1.shape[:2]
         row, col = int(row), int(col)
 
         img2 = np.empty((row*2, col*2, 3))
-
-
+        
+        print(f"processing {frame}")
+        
         for r in range(row):
             for c in range(col):
                 # print(f"Row #{r} and Col #{c}")
@@ -75,49 +82,58 @@ def frame_upscale(path: str, fin_path: str):
                 # print(f"{img1[r,c,0]} + {img1[r1,c1,0]} / 510 = {(img1[r1,c1,0]/510 + img2[2*r,2*c+1,0]/ 510)}")
                 # print(f"{img1[r,c,1]} + {img1[r1,c1,1]} / 510 = {(img1[r1,c1,1]/510 + img2[2*r,2*c+1,1]/ 510)}")
                 # print(f"{img1[r,c,2]} + {img1[r1,c1,2]} / 510 = {(img1[r1,c1,2]/510 + img2[2*r,2*c+1,2]/ 510)}")
-                img2[2*r+1,2*c+1,0] = (img1[r1,c1,0]/510 + img2[2*r,2*c+1,0]/510)
-                img2[2*r+1,2*c+1,1] = (img1[r1,c1,1]/510 + img2[2*r,2*c+1,1]/510)
-                img2[2*r+1,2*c+1,2] = (img1[r1,c1,2]/510 + img2[2*r,2*c+1,2]/510)
+                img2[2*r+1,2*c+1,0] = (img2[2*r,2*c,0]/3 + img2[2*r,2*c+1,0]/3 + img2[2*r+1,2*c,0]/3)
+                img2[2*r+1,2*c+1,1] = (img2[2*r,2*c,1]/3 + img2[2*r,2*c+1,1]/3 + img2[2*r+1,2*c,1]/3)
+                img2[2*r+1,2*c+1,2] = (img2[2*r,2*c,2]/3 + img2[2*r,2*c+1,2]/3 + img2[2*r+1,2*c,2]/3)
+                # img2[2*r+1,2*c+1,0] = (img2[2*r,2*c,0]/3 + img2[2*r,2*c+1,0]/3 + img2[2*r+1,2*c,0]/3)
+                # img2[2*r+1,2*c+1,1] = (img2[2*r,2*c,1]/3 + img2[2*r,2*c+1,1]/3 + img2[2*r+1,2*c,1]/3)
+                # img2[2*r+1,2*c+1,2] = (img2[2*r,2*c,2]/3 + img2[2*r,2*c+1,2]/3 + img2[2*r+1,2*c,2]/3)
 
                 # print(f"Row {r} and Col {c}")
                 # print(f"{img2[2*r,2*c]} {img2[2*r,2*c+1]} {img2[2*r+1,2*c]} {img2[2*r+1,2*c+1]}")
 
         file = fin_path + name
         plt.imsave(file, img2)
-    
+        # i +=1 
+        # if i == 1:
+        #     break
     return
 
-fin_path = "/Users/mane/Desktop/upscaling project/clips_new/"
+# fin_path = "/Users/mane/Desktop/upscaling project/clips_new/"
 
-#selecting clip
-path = "/Users/mane/Desktop/upscaling project/clips/"
-path_len = len(path)
+# #selecting clip
+# path = "/Users/mane/Desktop/upscaling project/clips/"
+# path_len = len(path)
 
-print(f"Enter your choice for the clip you want to upscale: ")
-clip = parse(path)
-print(f"clip choosen is {clip}")
+# print(f"Enter your choice for the clip you want to upscale: ")
+# clip = parse(path)
+# print(f"clip choosen is {clip}")
 
-fin_path = fin_path + clip[path_len::] + '/'
-if os.path.exists(fin_path):
-    print(f"final path {fin_path} already exists")
-else:
-    subprocess.call(['mkdir', fin_path])
+# fin_path = fin_path + clip[path_len::] + '/'
+# if os.path.exists(fin_path):
+#     print(f"final path {fin_path} already exists")
+# else:
+#     subprocess.call(['mkdir', fin_path])
 
-#selecting catogery of clip
-path = clip + '/'
-path_len = len(path)
-print(f"\nEnter your choice for the catogery of clip you want to upscale: ")
-cat = parse(path)
-print(f"catagoery choosen is {cat}")
+# #selecting catogery of clip
+# path = clip + '/'
+# path_len = len(path)
+# print(f"\nEnter your choice for the catogery of clip you want to upscale: ")
+# cat = parse(path)
+# print(f"catagoery choosen is {cat}")
 
-fin_path = fin_path + cat[path_len::] + '/'
-if os.path.exists(fin_path):
-    print(f"final path {fin_path} already exists")
-else:
-    subprocess.call(['mkdir', fin_path])
+# fin_path = fin_path + cat[path_len::] + '/'
+# if os.path.exists(fin_path):
+#     print(f"final path {fin_path} already exists")
+# else:
+#     subprocess.call(['mkdir', fin_path])
 
+# frame_upscale(cat,fin_path)
+
+cat = "image_sequences/dms1e1(lifetime)/"
+fin_path = "clips_new/dms1e1(lifetime)/"
 frame_upscale(cat,fin_path)
 
-# cat = "clips_new/trio/lifetime/"
-# fin_path = "/Users/mane/Desktop/upscaling project/"
-# frame_upscale(cat,cat)
+dest= "videos_new/dms1e1(lifetime).mkv"
+
+# subprocess.call(['./imgseq-to-video.sh',fin_path,dest])
